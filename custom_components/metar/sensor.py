@@ -30,6 +30,8 @@ SENSOR_TYPES = {
     'visibility': ['Visibility', None],
     'precipitation': ['Precipitation', None],
     'sky': ['Sky', None],
+    'dewpt': ['Dew Point', None],
+    'humidity': ['Humidity' "%"]
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -91,17 +93,26 @@ class MetarSensor(Entity):
                  #self._state = self.weather_data.sensor_data.time.ctime()
                  self._state = pytz.utc.localize(self.weather_data.sensor_data.time).astimezone().ctime()
             if self.type == 'temperature':
-                 degree = self.weather_data.sensor_data.temp.string().split(" ")
-                 self._state = degree[0]
+                 self._state = self.weather_data.sensor_data.temp.string().split(" ")[0]
             elif self.type == 'weather':
                 self._state = self.weather_data.sensor_data.present_weather()
             elif self.type == 'wind':
                 self._state = self.weather_data.sensor_data.wind()
             elif self.type == 'pressure':
-                self._state = self.weather_data.sensor_data.press.string("hpa")
+                self._state = self.weather_data.sensor_data.press.string("hpa").split(" ")[0]
             elif self.type == 'visibility':
                 self._state = self.weather_data.sensor_data.visibility()
                 self._unit_of_measurement = 'm'
+            elif self.type == 'dewpt':
+                self._state = self.weather_data.sensor_data.dewpt.string().split(" ")[0]
+            elif self.type == 'humidity':
+                temp = float(self.weather_data.sensor_data.temp.string().split(" ")[0])
+                dewpt = float(self.weather_data.sensor_data.dewpt.string().split(" ")[0])
+                relHum = (
+                (6.11 * 10.0 ** (7.5 * dewpt / (237.7 + dewpt)))
+                / (6.11 * 10.0 ** (7.5 * temp / (237.7 + temp)))
+                * 100
+                self._state = int(relHum)
             # elif self.type == 'precipitation':
                 # self._state = self.weather_data.sensor_data.precip_1hr.string("in")
                 # self._unit_of_measurement = 'mm'
