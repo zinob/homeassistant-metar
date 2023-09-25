@@ -24,9 +24,9 @@ _LOGGER = logging.getLogger(__name__)
 SENSOR_TYPES = {
     'time': ['Updated ', None],
     'weather': ['Condition', None],
-    'temperature': ['Temperature', 'C'],
+    'temperature': ['Temperature', '°C'],
     'wind': ['Wind speed', None],
-    'pressure': ['Pressure', None],
+    'pressure': ['Pressure', 'hPa'],
     'visibility': ['Visibility', None],
     'precipitation': ['Precipitation', None],
     'sky': ['Sky', None],
@@ -98,7 +98,7 @@ class MetarSensor(Entity):
             elif self.type == 'wind':
                 self._state = self.weather_data.sensor_data.wind()
             elif self.type == 'pressure':
-                self._state = self.weather_data.sensor_data.press.string("mb")
+                self._state = self.weather_data.sensor_data.press.string("hpa")
             elif self.type == 'visibility':
                 self._state = self.weather_data.sensor_data.visibility()
                 self._unit_of_measurement = 'm'
