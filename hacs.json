@@ -1,5 +1,5 @@
 {
-  "name": "homeassistant metar temperature sensor",
+  "name": "METAR sensor",
   "render_readme": "true",
   "country": "NO"
 }
