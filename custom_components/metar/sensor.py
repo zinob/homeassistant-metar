@@ -15,7 +15,7 @@ from metar import Metar
 DOMAIN = 'metar'
 CONF_AIRPORT_NAME = 'airport_name'
 CONF_AIRPORT_CODE = 'airport_code'
-SCAN_INTERVAL = timedelta(seconds=3600)
+SCAN_INTERVAL = timedelta(seconds=1800)
 BASE_URL = "https://tgftp.nws.noaa.gov/data/observations/metar/stations/"
 
 _LOGGER = logging.getLogger(__name__)
@@ -87,7 +87,8 @@ class MetarSensor(Entity):
 
         try:
             if self.type == 'time':
-                 self._state = self.weather_data.sensor_data.time.ctime()
+                 #self._state = self.weather_data.sensor_data.time.ctime()
+                 self._state = pytz.utc.localize(self.weather_data.sensor_data.time).astimezone().ctime()
             if self.type == 'temperature':
                  degree = self.weather_data.sensor_data.temp.string().split(" ")
                  self._state = degree[0]
