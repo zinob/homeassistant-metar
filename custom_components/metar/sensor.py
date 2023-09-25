@@ -111,7 +111,7 @@ class MetarSensor(Entity):
                 relHum = (
                 (6.11 * 10.0 ** (7.5 * dewpt / (237.7 + dewpt)))
                 / (6.11 * 10.0 ** (7.5 * temp / (237.7 + temp)))
-                * 100
+                * 100)
                 self._state = int(relHum)
             # elif self.type == 'precipitation':
                 # self._state = self.weather_data.sensor_data.precip_1hr.string("in")
