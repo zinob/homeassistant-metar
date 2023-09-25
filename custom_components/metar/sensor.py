@@ -31,7 +31,7 @@ SENSOR_TYPES = {
     'precipitation': ['Precipitation', None],
     'sky': ['Sky', None],
     'dewpt': ['Dew Point', None],
-    'humidity': ['Humidity' "%"]
+    'humidity': ['Humidity', '%'],
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
