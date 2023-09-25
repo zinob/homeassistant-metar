@@ -1,5 +1,6 @@
 import logging, time
 import voluptuous as vol
+import pytz
 import homeassistant.helpers.config_validation as cv
 from datetime import timedelta
 from homeassistant.helpers.config_validation import PLATFORM_SCHEMA
