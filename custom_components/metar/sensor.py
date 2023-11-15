@@ -25,7 +25,8 @@ SENSOR_TYPES = {
     'time': ['Updated ', None],
     'weather': ['Condition', None],
     'temperature': ['Temperature', '°C'],
-    'wind': ['Wind speed', None],
+    'wind_speed': ['Wind speed', "m/s"],
+    'wind_dir': ['Wind direction', "°"],
     'pressure': ['Pressure', 'hPa'],
     'visibility': ['Visibility', None],
     'precipitation': ['Precipitation', None],
@@ -96,8 +97,10 @@ class MetarSensor(Entity):
                  self._state = self.weather_data.sensor_data.temp.string().split(" ")[0]
             elif self.type == 'weather':
                 self._state = self.weather_data.sensor_data.present_weather()
-            elif self.type == 'wind':
-                self._state = self.weather_data.sensor_data.wind()
+            elif self.type == 'wind_speed':
+                self._state = self.weather_data.sensor_data.wind_speed.value("MPS")
+            elif self.type == 'wind_dir':
+                self._state = self.weather_data.sensor_data.wind_dir.value()
             elif self.type == 'pressure':
                 self._state = self.weather_data.sensor_data.press.string("hpa").split(" ")[0]
             elif self.type == 'visibility':
